@@ -31,4 +31,5 @@
     <int:header-filter input-channel="inputChannel"
                        output-channel="outputChannel" header-names="lastName, state"/>
 
+    <int:logging-channel-adapter id="outputChannel" level="INFO"/>
 </beans>

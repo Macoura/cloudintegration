@@ -1,0 +1,5 @@
+Messi,France;
+Mbappe,France;
+Ronaldo,Mali;
+Pelé(rip),Mali;
+LeGraet,Mali;

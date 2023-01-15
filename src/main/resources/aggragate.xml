@@ -27,6 +27,7 @@
 	</int:recipient-list-router>
     
     <int:service-activator input-channel="serviceActivatorChannel" output-channel="aggregatorChannel" ref="serviceID" method="myService"/>
+
     <bean id="serviceID" class="test.AccountService"/>
     
     <int:channel id="aggregatorChannel"></int:channel>
@@ -35,6 +36,7 @@
                     input-channel="aggregatorChannel"
                     output-channel="outputChannel"
                     correlation-strategy-expression="payload.name"
+
                     release-strategy-expression="size()==2">
     </int:aggregator>
 

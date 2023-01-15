@@ -10,30 +10,29 @@
            http://www.springframework.org/schema/integration/file
            http://www.springframework.org/schema/integration/file/spring-integration-file-5.1.xsd">
 
-
     <int-file:inbound-channel-adapter
-            channel="channelEntree"
-            directory="dataIn"
-            filename-pattern="listeCourse.txt">
-        <int:poller id="poller" fixed-delay="1000" />
+		channel="channelEntree" 
+    	directory="dataIn"
+    	filename-pattern="test64.txt">
+    		<int:poller id="poller" fixed-delay="1000" />
     </int-file:inbound-channel-adapter>
 
-    <int-file:file-to-string-transformer input-channel="channelEntree" output-channel="mainChannel"
+    <int:channel id="channelEntree"></int:channel>
+
+    <int-file:file-to-string-transformer input-channel="channelEntree" output-channel="responseChannel"
                                          delete-files="false" charset="UTF-8"/>
 
-    <int:channel id="mainChannel"></int:channel>
+    <int:channel id="responseChannel"></int:channel>
 
-    <int:splitter id="splitter"
-                  ref="splitterBean"
-                  method="split"
-                  input-channel="mainChannel"
-                  output-channel="outChannel"
-    />
 
-    <int:channel id="outChannel"/>
+    <int:transformer id="testTransformer" input-channel="responseChannel" method="transformer"
+                     output-channel="outChannel">
+        <bean class="test.Convert_base64"/>
+    </int:transformer>
 
-    <bean id="splitterBean" class="test.Splitter"/>
 
-    <int:logging-channel-adapter channel="outChannel" level="INFO"/>
+
+    <int:channel id="outChannel"></int:channel>
+
+    <int-file:outbound-channel-adapter channel="outChannel" id="filesOut" directory="dataOut"/>
 </beans>
-
